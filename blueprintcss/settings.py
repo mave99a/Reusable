@@ -1,7 +1,7 @@
-from ragendja.settings_post import *
+from ragendja.settings_post import settings
 
-add_uncombined_app_media(globals(), 'blueprintcss')
+settings.add_uncombined_app_media('blueprintcss')
 
-add_app_media(globals(), 'combined-%(LANGUAGE_DIR)s.css',
+settings.add_app_media('combined-%(LANGUAGE_DIR)s.css',
     'blueprintcss/screen.css'
 )
