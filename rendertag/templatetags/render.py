@@ -1,34 +1,38 @@
 from django import template
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+
 
 register = template.Library()
 BASE_PATH = 'objects'
 
 class RenderObjectNode(template.Node):
-    def __init__(self, object_name, template_name=None):
-        self.object_name = object_name
+    def __init__(self, object_ref, template_name=None):
+        self.object_ref = template.Variable(object_ref)
         self.template_name = template_name
         
     def render(self, context):
-        object = context[self.object_name]
+        object = self.object_ref.resolve(context)
         output = ''
-        template = self.template_name
+        templatepath = self.template_name
         if object is None:
             pass
         else: 
-            if not template:  
+            if not templatepath:  
                 if hasattr(object, 'templatename'):         # check if it's a class which provide template name
-                    template = BASE_PATH + '/' + object.templatename + '.html'
+                    templatepath = BASE_PATH + '/' + object.templatename + '.html'
                 else:              
                     try: # dictionary lookup
-                        template = BASE_PATH + '/'  + object['templatename']+ '.html'
+                        templatepath = BASE_PATH + '/'  + object['templatename']+ '.html'
                     except (TypeError, AttributeError, KeyError):
-                        template = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
+                        templatepath = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
                 
             try:        
-                output = render_to_string(template, {'objects':object, 'object': object}, context)
-            except: 
-                pass
+                output = render_to_string(templatepath, {'objects':object, 'object': object})
+            except template.TemplateDoesNotExist: 
+                output = '[err: template %s not found]' % templatepath
+            
+            output = mark_safe(output)
              
         return output
     
