@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 
 
 register = template.Library()
-BASE_PATH = 'objects'
+BASE_PATH = 'components'
 
 class RenderObjectNode(template.Node):
     def __init__(self, object_ref, template_name=None):
