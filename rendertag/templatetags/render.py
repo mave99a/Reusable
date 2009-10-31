@@ -12,11 +12,13 @@ class RenderObjectNode(template.Node):
         self.template_name = template_name
         
     def render(self, context):
-        object = self.object_ref.resolve(context)
-        output = ''
+        try: 
+            object = self.object_ref.resolve(context)
+        except:
+            object = None
         templatepath = self.template_name
         if object is None:
-            pass
+            output = ''
         else: 
             if not templatepath:  
                 if hasattr(object, 'templatename'):         # check if it's a class which provide template name
