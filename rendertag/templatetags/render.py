@@ -18,9 +18,12 @@ class RenderObjectNode(template.Node):
             object = None
         templatepath = self.template_name
         if object is None:
-            output = ''
+            output = '[error] none object'
         else: 
-            if not templatepath:  
+            if (object.__class__.__name__ != 'dict') and hasattr(object, '__len__'): 
+                templatepath = BASE_PATH + '/list.html'
+                output = render_to_string(templatepath, {'objects': object})
+            elif not templatepath:  
                 if hasattr(object, 'templatename'):         # check if it's a class which provide template name
                     templatepath = BASE_PATH + '/' + object.templatename + '.html'
                 else:              
@@ -30,7 +33,7 @@ class RenderObjectNode(template.Node):
                         templatepath = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
                 
             try:        
-                output = render_to_string(templatepath, {'objects':object, 'object': object})
+                output = render_to_string(templatepath, {'object': object})
             except template.TemplateDoesNotExist: 
                 output = '[err: template %s not found]' % templatepath
             
