@@ -1,0 +1,6 @@
+Patch genericview to support adding extra_fields, refer to: 
+
+http://www.djangosnippets.org/snippets/99/  (this is too old, so I need to write my own, but idea and some code take from here)
+http://code.djangoproject.com/ticket/9150  (this is intend to fix same problem, but I feel it's not as good as former) 
+
+
