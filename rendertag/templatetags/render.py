@@ -1,7 +1,7 @@
 from django import template
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
-
+from parserargshelper import parse_args_kwargs_and_as_var
 
 register = template.Library()
 BASE_PATH = 'components'
@@ -44,11 +44,10 @@ class RenderObjectNode(template.Node):
     
 def do_render_object(parser, token):
     bits = token.split_contents()
-    if len(bits) == 2:
-        return RenderObjectNode(bits[1])
-    elif len(bits) == 3:
-        return RenderObjectNode(bits[1], bits[2])
-    else:
-        raise template.TemplateSyntaxError, "%r requires one or two arguments" % bits[0]
+    if len(bits) < 2:
+        raise template.TemplateSyntaxError, "%r requires at least 1 arguments" % bits[0]
+    else: 
+        args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits)
+        return RenderObjectNode(args, kwargs, as_var)
 
 register.tag('render', do_render_object)
