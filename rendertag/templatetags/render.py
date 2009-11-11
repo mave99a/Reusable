@@ -1,15 +1,16 @@
 from django import template
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
-from parserargshelper import parse_args_kwargs_and_as_var
+from parseargshelper import parse_args_kwargs_and_as_var
 
 register = template.Library()
 BASE_PATH = 'components'
 
 class RenderObjectNode(template.Node):
-    def __init__(self, object_ref, template_name=None):
+    def __init__(self, object_ref, template_name=None, as_var = None):
         self.object_ref = template.Variable(object_ref)
         self.template_name = template_name
+        self.as_var = as_var
         
     def render(self, context):
         try: 
@@ -48,6 +49,6 @@ def do_render_object(parser, token):
         raise template.TemplateSyntaxError, "%r requires at least 1 arguments" % bits[0]
     else: 
         args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits)
-        return RenderObjectNode(args, kwargs, as_var)
+        return RenderObjectNode(args[0], as_var = as_var)
 
 register.tag('render', do_render_object)
