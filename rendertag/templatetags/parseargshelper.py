@@ -13,7 +13,7 @@ def parse_args_kwargs_and_as_var(parser, bits):
                 if '=' in arg:
                     k, v = arg.split('=', 1)
                     k = k.strip()
-                    kwargs[k] = parser.compile_filter(v)
+                    kwargs[k] = v
                 elif arg:
-                    args.append(parser.compile_filter(arg))
+                    args.append(arg)
     return args, kwargs, as_var

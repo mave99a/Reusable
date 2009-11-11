@@ -48,7 +48,7 @@ def do_render_object(parser, token):
     if len(bits) < 2:
         raise template.TemplateSyntaxError, "%r requires at least 1 arguments" % bits[0]
     else: 
-        args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits)
+        args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits[1:])
         return RenderObjectNode(args[0], as_var = as_var)
 
 register.tag('render', do_render_object)
