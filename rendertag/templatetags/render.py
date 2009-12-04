@@ -35,7 +35,9 @@ class RenderObjectNode(template.Node):
                 templatecontext = {'object': object}
                 
             try:        
-                output = render_to_string(templatepath, templatecontext)
+                context.push()
+                output = render_to_string(templatepath, templatecontext, context)
+                context.pop()
             except template.TemplateDoesNotExist: 
                 output = '[err: template %s not found]' % templatepath
             
@@ -49,6 +51,6 @@ def do_render_object(parser, token):
         raise template.TemplateSyntaxError, "%r requires at least 1 arguments" % bits[0]
     else: 
         args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits[1:])
-        return RenderObjectNode(args[0], as_var = as_var)
+        return RenderObjectNode(args[0], template_name=kwargs.get("template"), as_var = as_var)
 
 register.tag('render', do_render_object)
