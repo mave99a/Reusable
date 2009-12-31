@@ -13,6 +13,7 @@ class RenderObjectNode(template.Node):
         self.as_var = as_var
         
     def render(self, context):
+        context.push()
         try: 
             object = self.object_ref.resolve(context)
         except:
@@ -35,14 +36,13 @@ class RenderObjectNode(template.Node):
                 templatecontext = {'object': object}
                 
             try:        
-                context.push()
-                output = render_to_string(templatepath, templatecontext, context)
-                context.pop()
+                output = render_to_string(templatepath, templatecontext)
             except template.TemplateDoesNotExist: 
                 output = '[err: template %s not found]' % templatepath
             
             output = mark_safe(output)
              
+        context.pop()
         return output
     
 def do_render_object(parser, token):
