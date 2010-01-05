@@ -18,30 +18,34 @@ class RenderObjectNode(template.Node):
             object = self.object_ref.resolve(context)
         except:
             object = None
-        templatepath = self.template_name
+        
+        if self.template_name:     
+            try:
+                templatepath = template.Variable(self.template_name).resolve(context)
+            except: 
+                templatepath = self.template_name
+        else:
+            templatepath = None
+            
         if object is None:
             output = ''
-        else: 
+        else:                 
             if (object.__class__.__name__ != 'dict') and hasattr(object, '__len__'): 
+                templatecontext = {'objects': object, 
+                                   'template_name': templatepath}  # save the previous template for list 
                 templatepath = BASE_PATH + '/list.html'
-                templatecontext = {'objects': object}
-            elif not templatepath:  
-                if hasattr(object, 'templatename'):         # check if it's a class which provide template name
-                    templatepath = BASE_PATH + '/' + object.templatename + '.html'
-                else:              
-                    try: # dictionary lookup
-                        templatepath = BASE_PATH + '/'  + object['templatename']+ '.html'
-                    except (TypeError, AttributeError, KeyError):
-                        templatepath = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
+            else: 
+                if templatepath is None:  
+                    templatepath = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
+                
                 templatecontext = {'object': object}
                 
             try:        
                 output = render_to_string(templatepath, templatecontext)
             except template.TemplateDoesNotExist: 
                 output = '[err: template %s not found]' % templatepath
-            
-            output = mark_safe(output)
-             
+
+        output = mark_safe(output)
         context.pop()
         return output
     
