@@ -40,8 +40,8 @@ def create_object(request, model=None, template_name=None, extra_fields = None,
         if form.is_valid():            
             new_object = apply_extra_fields_and_save(request, extra_fields, form)
             
-            if request.user.is_authenticated():
-                request.user.message_set.create(message=ugettext("The %(verbose_name)s was created successfully.") % {"verbose_name": model._meta.verbose_name})
+#            if request.user.is_authenticated():
+#                request.user.message_set.create(message=ugettext("The %(verbose_name)s was created successfully.") % {"verbose_name": model._meta.verbose_name})
             return redirect(post_save_redirect, new_object)
     else:
         form = form_class()
@@ -83,8 +83,8 @@ def update_object(request, model=None, object_id=None, slug=None,
         if form.is_valid():
             obj = apply_extra_fields_and_save(request, extra_fields, form)
             
-            if request.user.is_authenticated():
-                request.user.message_set.create(message=ugettext("The %(verbose_name)s was updated successfully.") % {"verbose_name": model._meta.verbose_name})
+#            if request.user.is_authenticated():
+#                request.user.message_set.create(message=ugettext("The %(verbose_name)s was updated successfully.") % {"verbose_name": model._meta.verbose_name})
             return redirect(post_save_redirect, obj)
     else:
         form = form_class(instance=obj)
