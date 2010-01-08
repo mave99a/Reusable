@@ -1,3 +1,4 @@
+import logging
 from django import template
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -8,6 +9,7 @@ BASE_PATH = 'components'
 
 class RenderObjectNode(template.Node):
     def __init__(self, object_ref, template_name=None, as_var = None):
+        logging.debug('Render: object=%s, template_name=%s' % (object_ref, template_name))
         self.object_ref = template.Variable(object_ref)
         self.template_name = template_name
         self.as_var = as_var
@@ -34,17 +36,20 @@ class RenderObjectNode(template.Node):
                 templatecontext = {'objects': object, 
                                    'template_name': templatepath}  # save the previous template for list 
                 templatepath = BASE_PATH + '/list.html'
+                logging.debug('Render: using list template')
             else: 
                 if templatepath is None:  
                     templatepath = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
-                
+                    logging.debug('Render: using default template %s' % templatepath)
+                    
                 templatecontext = {'object': object}
                 
             try:        
                 output = render_to_string(templatepath, templatecontext)
             except template.TemplateDoesNotExist: 
                 output = '[err: template %s not found]' % templatepath
-
+                logging.error('Render: template %s not found]' % templatepath)
+ 
         output = mark_safe(output)
         context.pop()
         return output
