@@ -26,7 +26,7 @@ from parseargshelper import parse_args_kwargs_and_as_var
 register = template.Library()
 BASE_PATH = 'components'
 
-def renderhelper(object, templatepath, listtemplate=None):
+def renderhelper(object, templatepath, listtemplate=None, template_postfix=None):
     ''' Render object or object list '''
     if object is None:
         return ''
@@ -37,7 +37,7 @@ def renderhelper(object, templatepath, listtemplate=None):
             isTable = False;
             hasDetected = False;
             for item in object:
-                t = renderhelper(item, templatepath)
+                t = renderhelper(item, templatepath, template_postfix=template_postfix)
                 #
                 #  detect if we should use <Table> or <ul> based on the list item
                 #
@@ -65,7 +65,10 @@ def renderhelper(object, templatepath, listtemplate=None):
             logging.debug('Render: using list template')
     else: 
         if templatepath is None:  
-            templatepath = BASE_PATH + '/' + object.__class__.__name__.lower() + '.html'
+            templatepath = BASE_PATH + '/' + object.__class__.__name__.lower()
+            if template_postfix is not None:
+                templatepath += '_' + template_postfix.lower()
+            templatepath += '.html'
             logging.debug('Render: using default template %s' % templatepath)
             
         templatecontext = {'object': object}
@@ -79,12 +82,13 @@ def renderhelper(object, templatepath, listtemplate=None):
     return mark_safe(output)
 
 class RenderObjectNode(template.Node):
-    def __init__(self, object_ref, template_name=None, as_var = None, listtemplate=None):
+    def __init__(self, object_ref, template_name=None, as_var = None, listtemplate=None, template_postfix=None):
         logging.debug('Render: object=%s, template_name=%s' % (object_ref, template_name))
         self.object_ref = template.Variable(object_ref)
         self.template_name = template_name
         self.as_var = as_var
         self.listtemplate = listtemplate
+        self.template_postfix = template_postfix
             
     def render(self, context):
         try: 
@@ -102,7 +106,8 @@ class RenderObjectNode(template.Node):
 
         return renderhelper(object, 
                             templatepath, 
-                            listtemplate=self.listtemplate)
+                            listtemplate=self.listtemplate,
+                            template_postfix = self.template_postfix)
     
 def do_render_object(parser, token):
     bits = token.split_contents()
@@ -112,6 +117,7 @@ def do_render_object(parser, token):
         args, kwargs, as_var = parse_args_kwargs_and_as_var(parser, bits[1:])
         return RenderObjectNode(args[0], 
                                 template_name=kwargs.get("template"), 
+                                template_postfix =kwargs.get("templatetype"),
                                 listtemplate=kwargs.get("listtemplate"),
                                 as_var = as_var)
 
