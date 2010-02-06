@@ -26,7 +26,7 @@ from parseargshelper import parse_args_kwargs_and_as_var
 register = template.Library()
 BASE_PATH = 'components'
 
-def renderhelper(object, templatepath, listtemplate=None, template_postfix=None):
+def renderhelper(object, templatepath, listtemplate=None, template_postfix=None, context_instance=None):
     ''' Render object or object list '''
     if object is None:
         return ''
@@ -37,7 +37,7 @@ def renderhelper(object, templatepath, listtemplate=None, template_postfix=None)
             isTable = False;
             hasDetected = False;
             for item in object:
-                t = renderhelper(item, templatepath, template_postfix=template_postfix)
+                t = renderhelper(item, templatepath, template_postfix=template_postfix, context_instance = context_instance)
                 #
                 #  detect if we should use <Table> or <ul> based on the list item
                 #
@@ -74,7 +74,7 @@ def renderhelper(object, templatepath, listtemplate=None, template_postfix=None)
         templatecontext = {'object': object}
         
     try:        
-        output = render_to_string(templatepath, templatecontext)
+        output = render_to_string(templatepath, templatecontext, context_instance)
     except template.TemplateDoesNotExist: 
         output = '[err: template %s not found]' % templatepath
         logging.error('Render: template %s not found]' % templatepath)    
@@ -107,7 +107,8 @@ class RenderObjectNode(template.Node):
         return renderhelper(object, 
                             templatepath, 
                             listtemplate=self.listtemplate,
-                            template_postfix = self.template_postfix)
+                            template_postfix = self.template_postfix,
+                            context_instance = context)
     
 def do_render_object(parser, token):
     bits = token.split_contents()
