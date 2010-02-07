@@ -104,11 +104,14 @@ class RenderObjectNode(template.Node):
         else:
             templatepath = None
 
-        return renderhelper(object, 
+        context.push()
+        result = renderhelper(object, 
                             templatepath, 
                             listtemplate=self.listtemplate,
                             template_postfix = self.template_postfix,
                             context_instance = context)
+        context.pop()
+        return result
     
 def do_render_object(parser, token):
     bits = token.split_contents()
