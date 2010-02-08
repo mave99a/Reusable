@@ -73,11 +73,19 @@ def renderhelper(object, templatepath, listtemplate=None, template_postfix=None,
             
         templatecontext = {'object': object}
         
-    try:        
+    if context_instance is not None:
+       context_instance.push()
+       
+    try:      
+
         output = render_to_string(templatepath, templatecontext, context_instance)
+        
     except template.TemplateDoesNotExist: 
         output = '[err: template %s not found]' % templatepath
         logging.error('Render: template %s not found]' % templatepath)    
+
+    if context_instance is not None:
+        context_instance.pop()       
 
     return mark_safe(output)
 
