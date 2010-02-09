@@ -38,11 +38,7 @@ def renderhelper(object, templatepath, listtemplate=None, template_postfix=None,
             isTable = False;
             hasDetected = False;
             for item in object:
-                if context_instance is not None:
-                    context_instance.push()
                 t = renderhelper(item, templatepath, template_postfix=template_postfix, context_instance = context_instance)
-                if context_instance is not None:
-                    context_instance.pop()  
                 #
                 #  detect if we should use <Table> or <ul> based on the list item
                 #
@@ -77,14 +73,16 @@ def renderhelper(object, templatepath, listtemplate=None, template_postfix=None,
             logging.debug('Render: using default template %s' % templatepath)
             
         templatecontext = {'object': object}
-               
+    
     try:      
-
-        output = render_to_string(templatepath, templatecontext, context_instance)
-        
+       output = render_to_string(templatepath, templatecontext, context_instance)
     except template.TemplateDoesNotExist: 
         output = '[err: template %s not found]' % templatepath
         logging.error('Render: template %s not found]' % templatepath)         
+
+    if context_instance is not None:
+        context_instance.pop()  
+        logging.debug('pop context')
 
     return mark_safe(output)
 
@@ -111,14 +109,11 @@ class RenderObjectNode(template.Node):
         else:
             templatepath = None
 
-        context.push()
-        result = renderhelper(object, 
+        return  renderhelper(object, 
                             templatepath, 
                             listtemplate=self.listtemplate,
                             template_postfix = self.template_postfix,
                             context_instance = context)
-        context.pop()
-        return result
     
 def do_render_object(parser, token):
     bits = token.split_contents()
