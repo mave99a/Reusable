@@ -28,16 +28,21 @@ BASE_PATH = 'components'
 
 def renderhelper(object, templatepath, listtemplate=None, template_postfix=None, context_instance=None):
     ''' Render object or object list '''
+          
     if object is None:
         return ''
- 
+       
     if (object.__class__.__name__ != 'dict') and hasattr(object, '__len__'): 
         if listtemplate is None:
             output =''
             isTable = False;
             hasDetected = False;
             for item in object:
+                if context_instance is not None:
+                    context_instance.push()
                 t = renderhelper(item, templatepath, template_postfix=template_postfix, context_instance = context_instance)
+                if context_instance is not None:
+                    context_instance.pop()  
                 #
                 #  detect if we should use <Table> or <ul> based on the list item
                 #
@@ -72,20 +77,14 @@ def renderhelper(object, templatepath, listtemplate=None, template_postfix=None,
             logging.debug('Render: using default template %s' % templatepath)
             
         templatecontext = {'object': object}
-        
-    if context_instance is not None:
-       context_instance.push()
-       
+               
     try:      
 
         output = render_to_string(templatepath, templatecontext, context_instance)
         
     except template.TemplateDoesNotExist: 
         output = '[err: template %s not found]' % templatepath
-        logging.error('Render: template %s not found]' % templatepath)    
-
-    if context_instance is not None:
-        context_instance.pop()       
+        logging.error('Render: template %s not found]' % templatepath)         
 
     return mark_safe(output)
 
