@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 from django.utils.translation import ugettext
 from django.contrib.auth.views import redirect_to_login
 from django.views.generic import GenericViewError
-from django.views.generic.create_update import get_model_and_form_class, apply_extra_context, redirect
+from django.views.generic.create_update import get_model_and_form_class, apply_extra_context, redirect, lookup_object
 
 def apply_extra_fields_and_save(request, extra_fields, form):
     # No errors -- this means we can save the data!
