@@ -114,7 +114,7 @@ class RenderObjectNode(template.Node):
                             context_instance = context)
                 
     def render_callable(self, callable, context):
-        result =  callable()
+        result =  callable(context['request'])
         if type(result) is str:
             return result
         else:
@@ -128,17 +128,17 @@ class RenderObjectNode(template.Node):
         try: 
             object = template.Variable(self.object_name).resolve(context)
         except:
-            m = r_identifers.match(self.object_name)
-            if m:
+            try: 
+                m = r_identifers.match(self.object_name)
                 module, func = m.group().rsplit('.', 1)
                 funcstring = self.object_name[len(module) + 1:]
                 mod = __import__(module, {}, {}, [''])
                 callable = getattr(mod, func)
-                
-                return self.render_callable(callable, context)
-            else:
-                raise template.TemplateSyntaxError, "The arguments of tag should be either an context varible or a callable"          
-        
+            except: 
+                raise template.TemplateSyntaxError, "The arguments of tag should be either an context varible or a callable"             
+                     
+            return self.render_callable(callable, context) 
+          
         return self.render_object(object, context)
     
 def do_render_object(parser, token):
