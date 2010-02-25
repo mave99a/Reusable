@@ -10,7 +10,7 @@ from django import template
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.core.paginator  import Paginator, InvalidPage
-from rendertag.templatetags.parseargshelper import parse_args_kwargs_and_as_var
+from renderhelpers.templatetags.parseargshelper import parse_args_kwargs_and_as_var
 
 register = template.Library()
 
