@@ -1,0 +1,46 @@
+{% extends "base_content.html" %}
+{% block title %}Cookmom{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href='/tag/'>Tags</a>{% endblock %}
+{% block main %}
+<div class="article">
+{% render article %}
+</div>
+
+{% render comments %}
+{% endblock %}
+
+
+{% block side %}
+
+<div class="section">
+<h2><span>Actions...</span></h2>
+<div>
+    <div>
+<a href="#" class="button"><span class="add">Add to your bookmark</span></a>
+
+<a href="#" class="button"><span class="delete">Delete bookmark</span></a>
+
+
+<a href="#" class="button"><span class="info">Do you need for help?</span></a>    </div>
+</div>
+</div>
+
+<div class="ad">
+{% include "ad/square-text.html" %}
+</div>
+
+<div class="section">
+<h2><span>Actions...</span></h2>
+<div>
+    <div>
+<a href="#" class="button"><span class="add">Add to your bookmark</span></a>
+
+<a href="#" class="button"><span class="delete">Delete bookmark</span></a>
+    </div>
+</div>
+</div>
+<div class="ad-img">
+{% include "ad/square-image.html" %}
+</div>
+
+{% endblock %} 

@@ -1,0 +1,119 @@
+/*
+* Tags css styles
+*/
+.tag, .deletedtag {
+	background: #E8F0F7;
+	color: #000;
+	padding: 2px 5px 0 5px;
+	margin: 4px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	display: inline-block;
+	text-decoration: none;
+	vertical-align: center;
+	outline: none;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+ }
+ 
+.tag:hover {
+ 	color:#005DC9;
+}
+ 
+.deletedtag {
+   background: #eee;
+   color: #ccc;
+}
+ 
+.deletedtag .tagtext{
+ 	text-decoration: line-through;	
+}
+ 
+.remove {
+	background:url("http://l.yimg.com/hr/1125/img/del_sprite_smallIcons.gif") no-repeat scroll 0 -399px transparent;
+	width:13px;
+	opacity:0.2;
+	display: inline-block;
+	padding:0;
+}
+ 
+.remove:hover {
+ 	opacity:1;
+}
+ 
+.undo {
+	background:url("http://l.yimg.com/hr/1125/img/del_sprite_smallIcons.gif") no-repeat scroll 0 -439px transparent;
+	width:13px;
+	opacity:0.2;
+	display: inline-block;
+	padding:0;
+}
+ 
+.undo:hover {
+ 	opacity:1;
+}
+
+.deletedtag .undo {
+   display: auto;
+}
+
+.deletedtag .remove {
+  display: none;
+ }
+ 
+ .tag .undo {
+   display:none;
+ }
+ 
+ .tag .remove {
+   display: auto;
+ }
+ 
+.tagCloud
+{ 
+  padding:5px 10px 5px 10px; 
+  line-height:1.4em;
+  text-align:justify;
+}
+
+.tagCloud a
+{ 
+	padding:0.1em 0.2em 0.1em 0.2em;
+	text-decoration: none;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	display: inline-block;
+}
+
+.tagCloud a:hover
+{
+	color:#005DC9;
+	background: #E8F0F7;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.tagCloud a.cloud0
+{ 
+  font-size:8pt;
+}
+.tagCloud a.cloud1
+{ 
+  font-size:12pt; 
+}
+.tagCloud a.cloud2
+{ 
+  font-size:14pt; 
+}
+.tagCloud a.cloud3
+{ 
+  font-size:16pt;
+}
+.tagCloud a.cloud4
+{ 
+  font-size:20pt;
+}
+.tagCloud a.cloud5
+{ 
+  font-size:24pt;
+}

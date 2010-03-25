@@ -1,0 +1,10 @@
+{% extends "taggable/base.html" %}
+{% block title %}{{tag}} - Cookmom{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <span>{{tag}}</span>{% endblock %}
+{% block main %}
+<h1>All tagged with "{{tag}}"</h1>
+{% load paginator %}
+{% paginator %}
+{% render object_list %}
+{% paginator %}
+{% endblock %}
