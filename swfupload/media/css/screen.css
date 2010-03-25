@@ -1,0 +1,12 @@
+
+.swfupload {
+	position: absolute;
+	z-index: 1;
+	outline: none;
+	cursor: wait;
+	opacity:1;
+} 
+.swfupload:hover {
+	opacity:0.1;
+	background: #e00;
+}
