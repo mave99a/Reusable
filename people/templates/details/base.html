@@ -1,0 +1,58 @@
+{% extends "people/base.html" %}
+{% block title %}{{object.name}} - Cookmom{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <span>{{object.name}}</span>{% endblock %}
+{% block h1%}{{object.name}}{%endblock%}
+{% block main %}
+<div >
+{% if is_self %}
+{% else %}
+<a href='#' class='awesome' style='float:right;'>+ Follow</a>
+{% endif %}
+</div>
+<ul class='tab'>
+<li class='{%block tab_user_wall%}{%endblock%}'><a href='{%url people.views.show_user id=object.id%}' >Wall</a></li>
+<li class='{%block tab_user_article%}{%endblock%}'><a href='{%url people.views.show_user id=object.id obj='article' %}'>Articles(10)</a></li>
+<li class='{%block tab_user_favorite%}{%endblock%}'><a href='#'>Favorites</a></li>
+<li class='{%block tab_user_comment%}{%endblock%}'><a href='{%url people.views.show_user id=object.id obj='comment' %}'>Commented</a></li>
+{% if is_self %}
+<li class='{%block tab_user_draft%}{%endblock%}'><a href='{%url people.views.show_user id=object.id obj='drafts' %}'>Draft</a></li>
+{% endif %}
+</ul>
+{% block detail %}
+
+{% endblock%}
+
+{% endblock %}
+
+{% block side %}
+{% render object templatetype=details %}
+
+<style>
+
+</style>
+<hr class='space'/>
+<ul class='stat'>
+<li>{{object.following_count}}<span>Following</span></li>
+<li>{{object.followers_count}}<span>Followers</span></li>
+<li>{{object.articles_count}}<span>Stories</span></li>
+<li>{{object.badges_count}}<span>Badges</span></li>
+</ul>
+<hr class='space'/>
+<h3>Badges</h3>
+<div>
+<img src='http://www.web20badges.com/generator/badge19.jpg' />
+<img src='http://www.web20badges.com/generator/badge20.jpg' />
+</div>
+<h3>Following</h3>
+<div class='usericonlist'>
+{%render people.widgets.following %}
+<hr class='clear space'/>
+</div>
+
+<h3>Followed by</h3>
+<div class='usericonlist'> 
+{%render people.widgets.followedby %}
+<hr class='clear space'/>
+</div>
+
+{% endblock %}

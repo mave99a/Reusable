@@ -1,0 +1,40 @@
+{% extends "people/base.html" %}
+{% block breadcrumb %}{{ block.super }} &raquo; <span>List</span>{% endblock %}
+{% block h1%}
+<!--
+<form style='float:right; margin:0;' action='/people/search/'>
+<input type='edit' value='searh by name or email'/><input type='submit' value='Search'/>
+</form>-->
+People
+{%endblock%}
+{% block main %}
+<ul class='tab'>
+<li class='{% if recent %}active{%endif%}'><a href='{% url people.views.list_user%}' >Recent</a></li>
+<li class='{% if top %}active{%endif%}'><a href='{% url people.views.list_user filter='top'%}'>Top 100</a></li>
+</ul>
+
+{% load paginator %}
+{% paginator %}
+<div class='users_list'>
+{% render object_list templatetype=listitem%}
+</div>
+{% paginator %}
+{% endblock %}
+
+{% block side %}
+<h3>Today's spotlight</h3>
+<div>
+{% render people.widgets.weeklytop templatetype=listitem_simple%}
+</div>
+
+<h3>Best of the week</h3>
+<div>
+{% render people.widgets.weeklytop templatetype=listitem_simple%}
+</div>
+
+<h3>All time best</h3>
+<div>
+{% render people.widgets.alltop templatetype=listitem_simple%}
+</div>
+
+{% endblock %}

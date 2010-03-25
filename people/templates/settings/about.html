@@ -1,0 +1,26 @@
+{% extends "people/settings/base.html" %}
+{%block tab_user_about%}active{%endblock%}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href='/people/me/'>My home</a> &raquo; <span>Change my details</span>{% endblock %}
+{% block detail %}
+
+<form action="" method="post" enctype="multipart/form-data">
+{{ form.as_p }}
+<p>
+<input type="submit" class='awesome'
+    value="Save" />
+</p>
+</form>
+<script>
+  if (navigator.geolocation) {
+	   navigator.geolocation.getCurrentPosition(function(position) {  
+	   $('input[name=geopt]').val(position.coords.latitude+","+position.coords.longitude);
+ 		}); 
+  } 
+  else {
+
+ }
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+<span class='vcard'>
+<a href="{% url people.views.show_user id=object.id%}" class="url" title="{{object.name}}">
+{% load userimage %}{% userimage object.img %}
+</a>
+</span>

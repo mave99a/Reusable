@@ -1,0 +1,14 @@
+{% extends "people/settings/base.html" %}
+{%block tab_user_services%}active{%endblock%}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href='/people/me/'>My home</a> &raquo; <span>Change my details</span>{% endblock %}
+{% block detail %}
+
+<ul>
+<li>Facebook</li>
+<li>Twitter</li>
+<li>Google account</li>
+<li>Flickr</li>
+<li>Picassa</li>
+</ul>
+
+{% endblock %}

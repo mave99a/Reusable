@@ -1,0 +1,19 @@
+{% extends "people/details/base.html" %}
+{%block tab_user_article%}active{%endblock%}
+{% block breadcrumb %}{{ block.super }} &raquo; <span>Article</span>{% endblock %}
+{% block detail %}
+
+{% if object.article_set %}
+{% makeobjectlist object.article_set addtion_filter=order('-mtime') paginate_by=10 as article_list%}
+{% load paginator %}
+{% paginator %}
+<div class='articles_list'>
+{% render article_list templatetype=listitem_self%}
+</div>
+{% paginator %}
+{% else %}
+{{object.name}} not yet write any article
+{% endif %}
+
+
+{% endblock %}

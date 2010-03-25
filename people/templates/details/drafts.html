@@ -1,0 +1,6 @@
+{% extends "people/details/base.html" %}
+{% block breadcrumb %}{{ block.super }} &raquo; <span>Draft</span>{% endblock %}
+{%block tab_user_draft%}active{%endblock%}
+{% block detail %}
+{% render article.widgets.manage_draft templatetype=listitem_manage %}
+{% endblock %}

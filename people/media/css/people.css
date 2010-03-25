@@ -1,0 +1,92 @@
+/*
+* user list style
+*/
+.users_list table tr:hover {
+	background: #F8F8FF; 
+} 
+
+/*
+* user list style when only display each user as an icon
+*/
+
+.usericonlist ul {
+	list-style: none; 
+}
+
+.usericonlist ul li {
+	float: left; 
+	margin: 0 4px 4px 0; 
+}
+
+/*
+* brief user information displayed inside a list or table
+*/
+.user_brief {
+	border-bottom: 1px dotted #ccc;
+}
+
+.user_brief h4 {
+	margin: 0; 
+	padding: 0;
+}
+
+.user_brief h4 a {
+	text-decoration: none;
+	color: #000;
+}
+
+.user_brief .location {
+	font-size: 80%;
+	margin-left: 10px;
+}
+
+.user_brief .stat, .user_brief .since {
+	font-style: italic; 
+	color: #999;
+	font-size: 10px;
+}
+
+.user_brief .label {
+	color: #fff; 
+	padding: 0 5px 0 5px;
+	background: #ccc;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+} 
+
+.user_brief p {
+	margin: 0;
+}
+
+td.vcard {
+	width: 50px;
+}
+
+/*
+* user stat
+*/
+
+ul.stat {
+  list-style: none; 
+  display: inline;
+}
+
+ul.stat li{
+  display: block;
+  float: left;
+  height: 55px;
+  width: 62px;
+  margin-right:4px;
+  background: #eeeeee;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size:22px;
+  text-align: center;
+}
+
+ul.stat li span {
+  font-size:11px;
+  display: block;
+  padding: 0;
+  margin: 0;
+}

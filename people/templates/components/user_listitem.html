@@ -1,0 +1,18 @@
+<td class='vcard'>
+<a href="{% url people.views.show_user id=object.id%}" class="url" title="{{object.name}}">
+{% load userimage %}{% userimage object.img %}
+</a>
+</td>
+<td class='user_brief'>
+<h4><a href='{% url people.views.show_user id=object.id%}' title='{{object.name}}'>{{object.name}}
+{% if object.show_my_location %}
+<span class='location'>({{object.city}})</span>
+{% endif %}
+</a></h4>
+<p class='stat'>
+{{object.articles_count}} stories | {{object.followers_count}} followers | {{object.badges_count}} badges earned
+</p>
+</td>
+<td>
+<a href='#' class='awesome'>+ Follow</a>
+</td>

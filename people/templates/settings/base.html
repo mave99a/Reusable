@@ -1,0 +1,19 @@
+{% extends "people/base.html" %}
+{% block title %}{{object.name}} - Cookmom{% endblock %}
+{% block h1%}Settings for {{object.name}} {%endblock%}
+{% block main %}
+<ul class='tab'>
+<li class='{%block tab_user_about%}{%endblock%}'><a href='{%url people.views.show_settings %}'>About me</a></li>
+<li class='{%block tab_user_image%}{%endblock%}'><a href='{%url people.views.show_settings_profileimage %}'>Profile image</a></li>
+<li class='{%block tab_user_services%}{%endblock%}'><a href='{%url people.views.show_settings_linkedservices %}'>Linked services</a></li>
+</ul>
+{% block detail %}
+
+{% endblock%}
+
+{% endblock %}
+
+{% block side %}
+  tbd
+
+{% endblock %}

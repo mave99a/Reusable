@@ -1,0 +1,17 @@
+{% extends "people/details/base.html" %}
+{%block tab_user_wall%}active{%endblock%}
+{% block detail %}
+{% load comments%}
+{% comment_form for object %}
+
+<h4>Comments</h4>
+<div class='comments_list'>
+{% if object.Comments%}
+{% render object.Comments %}
+{% else %}
+<table></table>
+{% endif %}
+</div>
+
+
+{% endblock %}
