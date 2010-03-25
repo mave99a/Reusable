@@ -1,0 +1,9 @@
+<form action="{% url comment.views.new_comment key=target.key%}" method="post" class='comment'>
+{{ form.as_p }}
+<p>
+<input type='hidden' name='returnurl' value='{{request.path_info}}'/>
+<input type='hidden' name='target' value='{{target.key}}'/>
+<input type="submit" class="awesome orange medium"
+    value="{% if object %}Apply changes{% else %}Post...{% endif %}" />
+</p>
+</form>

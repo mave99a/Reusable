@@ -1,0 +1,15 @@
+{% extends "people/base.html" %}
+{% block main %}
+{% render object%}
+
+
+<p>
+Do you really want to delete ?
+
+<form action="" method="post">
+  <input type="submit" name="delete" value="Delete" />
+</form>
+</p>
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base_content.html" %}
+{% block tabPeople %}active{% endblock %}
+{% block title %}Cookmom{% endblock %}
+
+{% block main %}
+<div class="article">
+{% render article %}
+</div>
+
+{% render comments %}
+{% endblock %}
+
+
+{% block side %}
+{% render vote %}
+
+<div class="section">
+<h2><span>Actions...</span></h2>
+<div>
+    <div>
+<a href="#" class="button"><span class="add">Add to your bookmark</span></a>
+
+<a href="#" class="button"><span class="delete">Delete bookmark</span></a>
+
+<a href="#" class="button"><span class="user">Add to your friends</span></a>
+
+<a href="#" class="button"><span class="alert">Did you miss something?</span></a>
+
+<a href="#" class="button"><span class="msg">You have 2 new messages</span></a>
+
+<a href="#" class="button"><span class="download">Download this file</span></a>
+
+<a href="#" class="button"><span class="lens">Are you looking for...?</span></a>
+
+<a href="#" class="button"><span class="info">Do you need for help?</span></a>    </div>
+</div>
+</div>
+
+<div class="ad">
+{% include "ad/square-text.html" %}
+</div>
+
+<div class="section">
+<h2><span>Actions...</span></h2>
+<div>
+    <div>
+<a href="#" class="button"><span class="add">Add to your bookmark</span></a>
+
+<a href="#" class="button"><span class="delete">Delete bookmark</span></a>
+    </div>
+</div>
+</div>
+<div class="ad-img">
+{% include "ad/square-image.html" %}
+</div>
+
+{% endblock %} 

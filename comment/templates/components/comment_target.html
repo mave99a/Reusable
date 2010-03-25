@@ -1,0 +1,12 @@
+<td class="author">
+{% render object.target templatetype=mini%}
+</td>
+<td class="arrow">
+  <em class="leftarrow"></em>
+</td>
+<td class="bubble">
+<p>
+{{object.content|linebreaksbr|urlize}}
+</p>
+<span>posted on {{object.mtime|date:'jS F Y H:i'}}</span>
+</td>
