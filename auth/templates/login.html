@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Sign in - Cookmom{% endblock %}
+{% block content %}
+<script>
+var returnURL='{{returnpath}}';
+</script>
+<div class='signinbox'>
+Sign in
+
+<ul>
+{% for method in authmethods%}
+<li>{{method.login_html|safe}}</li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}

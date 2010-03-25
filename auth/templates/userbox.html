@@ -1,0 +1,5 @@
+{% if authuser.is_authenticated %}
+Welcome! {{current_user.name}} <a href="/people/me/">My home</a> | <a href="/people/settings/">Settings</a> | {{authuser.logout_html|safe}}
+{% else %}
+Welcome! <a href="{% url auth.views.login %}"   title="Sign In">Login</a> | <a href='#' title="Sign Up and Register a New User.">Join</a>
+{% endif %}
