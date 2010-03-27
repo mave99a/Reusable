@@ -5,12 +5,34 @@
 var returnURL='{{returnpath}}';
 </script>
 <div class='signinbox'>
-Sign in
+<h1>Sign in</h1>
+<style>
+ul.authmethods {
+}
+ul.authmethods li {
+	padding: 10px;
+}
 
-<ul>
+ul.authmethods li:hover {
+	padding: 10px;
+	background: #eee;
+	border: 1px solid #ccc;
+}
+
+</style>
+<ul class='authmethods'>
 {% for method in authmethods%}
 <li>{{method.login_html|safe}}</li>
 {% endfor %}
+<li><span class='twitter'>Twitter connect(coming soon!)</span></li>
+<li><span class='foursquare'>Connect with Foursquare(coming soon!)</span></li>
+<li><span class='flickr'>Connect with Flickr(coming soon!)</span></li>
+<li><span class='dopplr'>Connect with Dolpplr(coming soon!)</span></li>
+<li><span class='tripit'>Connect with Tripit(coming soon!)</span></li>
 </ul>
 </div>
+{% endblock %}
+
+{% block side%}
+You don't need to sign up for an account, use any other account to login. Link all of your accounts together as one unified identity!
 {% endblock %}
