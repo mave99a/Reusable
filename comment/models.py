@@ -1,8 +1,9 @@
 from google.appengine.ext import db
+from google.appengine.ext.db import djangoforms
 import datetime
 from people.models import User
-from django import forms
 from django.db import models
+
     
 class Comment(db.Model):
     target = db.ReferenceProperty(db.Model, collection_name='Comments')
@@ -20,7 +21,7 @@ class Comment(db.Model):
     def get_absolute_url(self):
         return ('comment.views.show_comment', [self.key()])    
 
-class CommentForm(forms.ModelForm):
+class CommentForm(djangoforms.ModelForm):
     class Meta:
         model = Comment
         exclude = ('author', 'ctime', 'mtime', 'lang', 'target')          
