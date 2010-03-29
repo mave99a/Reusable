@@ -1,8 +1,6 @@
-from django.utils import simplejson
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-
+from django.utils.decorators import wraps
+from utils import AutoRendResponse
+    
 def AutoResponse(template=None, autoAjax=True, redirectBack=False):
     """
     Decorator for django views that automatically apply template for normal http request, 
@@ -14,24 +12,9 @@ def AutoResponse(template=None, autoAjax=True, redirectBack=False):
     
     """    
     def AutoResponseDecorator(view_func):
+        @wraps(view_func)
         def wrapper(request, *args, **kwargs):
-            context = view_func(request, *args, **kwargs)
-            
-            if (autoAjax and request.is_ajax()):
-                json = simplejson.dumps(context)
-                return HttpResponse(json, mimetype='application/json')     
-            
-            if (template is None) or redirectBack:
-                try:       
-                    returnurl = request.REQUEST['returnurl']
-                except:
-                    returnurl = request.META.get('HTTP_REFERER', '/')
-                return HttpResponseRedirect(returnurl)
-            
-            return render_to_response(
-                            template, 
-                            context, 
-                            context_instance=RequestContext(request),
-                        )            
+            context = view_func(request, *args, **kwargs)     
+            return AutoRendResponse(request, template, autoAjax, redirectBack, context)
         return wrapper
     return AutoResponseDecorator
