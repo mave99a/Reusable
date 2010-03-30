@@ -1,6 +1,8 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.paginator  import Paginator, InvalidPage
+from renderhelpers.decorators import method_adapter
 from renderhelpers.utils import AutoRendResponse
+from auth.decorators import login_required
 
 class GenericViews():
 
@@ -54,6 +56,7 @@ class GenericViews():
         pass
     
     @classmethod
+    @method_adapter(login_required)
     def update(cls, request, id):
         object = cls.get_object_or_404(id)  
         if request.method  == 'POST':
@@ -74,6 +77,7 @@ class GenericViews():
             return HttpResponseRedirect('/article/')
         
     @classmethod
+    @method_adapter(login_required)
     def delete(cls, request, id):
         object = cls.get_object_or_404(id)   
                 
